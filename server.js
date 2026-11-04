@@ -1,21 +1,48 @@
-express = require ("express")
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import supabase from "./config/supabase.js";
+import productosRoutes from "./routes/productos.js";
+import categoriasRoutes from "./routes/categorias.js";
+import usuariosRoutes from "./routes/usuarios.js";
+import ventasRoutes from "./routes/ventas.js";
+import detalleVentasRoutes from "./routes/detalleVentas.js";
 
-app= express ()
-app.set ("view engine", "ejs")
+dotenv.config();
 
-app.get ("/", (req,res)=> {
-    res.render ("index")
-}) 
+const app = express();
 
-app.get ("/productos", (req, res) => {
-    prods = [
-        {nombre: "Galletitas", categoria:"Alimento", precio: 1399, stock:10},
-        {nombre: "Jabón Liquido", categoria:"Higiene", precio: 2100, stock:12},
-        {nombre: "Dulce De Leche", categoria: "Alimento", precio: 2700, stock:11}
-    ]
-    res.render ("catalogo", {prods})
-})
+app.set("view engine", "ejs");
+app.set("views", "./views");
 
-app.listen (3000, () => {
-    console.log ("Servidor funcionando en http://localhost:3000")
-})
+app.use(cors());
+app.use(express.json());
+app.use(express.static("views"));
+
+app.use("/productos", productosRoutes);
+app.use("/categorias", categoriasRoutes);
+app.use("/usuarios", usuariosRoutes);
+app.use("/ventas", ventasRoutes);
+app.use("/detalle-ventas", detalleVentasRoutes);
+
+app.get("/", (req, res) => {
+    res.sendFile(process.cwd() + "/views/tienda.html");
+});
+
+app.get("/catalogo", async (req, res) => {
+    const { data, error } = await supabase
+        .from("productos")
+        .select("*");
+
+    if (error) {
+        return res.status(500).send("Error al obtener los productos");
+    }
+
+    res.json(data);
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Servidor funcionando en puerto ${PORT}`);
+});
