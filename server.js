@@ -12,27 +12,24 @@ dotenv.config();
 
 const app = express();
 
-//Ari
- app.set("view engine", "ejs");
-app.set("views", "./Views"); 
+app.set("view engine", "ejs");
+app.set("views", "./views");
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static("Views"));
+app.use(express.static("views"));
+
 app.use("/productos", productosRoutes);
 app.use("/categorias", categoriasRoutes);
 app.use("/usuarios", usuariosRoutes);
 app.use("/ventas", ventasRoutes);
 app.use("/detalle-ventas", detalleVentasRoutes);
 
-//Ari
 app.get("/", (req, res) => {
-    res.sendFile(process.cwd() + "/Views/tienda.html");
+    res.sendFile(process.cwd() + "/views/tienda.html");
 });
 
-//Ari
 app.get("/catalogo", async (req, res) => {
-
     const { data, error } = await supabase
         .from("productos")
         .select("*");
@@ -45,11 +42,6 @@ app.get("/catalogo", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-
-//Ari
-app.get("/", (req, res) => {
-    res.render("index");
-});
 
 app.listen(PORT, () => {
     console.log(`Servidor funcionando en puerto ${PORT}`);
