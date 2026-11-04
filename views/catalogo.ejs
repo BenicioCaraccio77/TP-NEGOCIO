@@ -1,0 +1,9 @@
+<section class="catalogo">
+    <% prods.forEach (prod => { %>
+        <h3> <%= prod.nombre %> </h3>
+        <p> <%= prod.categoria %> </p>
+        <p> <%=  prod.precio %> </p>
+        <p> <%= prod.stock %> </p>
+    <% }) %>
+
+</section>
