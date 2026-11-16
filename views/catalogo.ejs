@@ -1,9 +1,50 @@
-<section class="catalogo">
-    <% prods.forEach (prod => { %>
-        <h3> <%= prod.nombre %> </h3>
-        <p> <%= prod.categoria %> </p>
-        <p> <%=  prod.precio %> </p>
-        <p> <%= prod.stock %> </p>
-    <% }) %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Mi Tienda</title>
+    <link rel="stylesheet" href="/catalogo.css">
+</head>
+<body>
 
-</section>
+    <header>
+        <h1>Mi Tienda</h1>
+
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/catalogo">Productos</a>
+            <a href="/admin/productos">Administración</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Catálogo de productos</h2>
+
+        <input type="text" id="buscador" placeholder="Buscar productos...">
+
+        <section class="productos" id="lista-productos">
+
+        </section>
+
+        <h2>Carrito de compras</h2>
+
+        <div id="carrito"></div>
+
+        <p id="total-carrito">Total: $0</p>
+
+        <button onclick="confirmarCompra()">Confirmar compra</button>
+
+    </main>
+
+    <div id="detalle-producto" class="modal">
+        <div class="modal-contenido">
+            <button class="cerrar-modal" onclick="cerrarDetalles()">×</button>
+            <div id="contenido-detalles"></div>
+        </div>
+    </div>
+
+    <script src="/catalogo.js"></script>
+
+</body>
+</html>

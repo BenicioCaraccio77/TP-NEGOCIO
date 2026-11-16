@@ -1,27 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="/admin.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración</title>
 </head>
 <body>
-    
+
     <nav class="nav">
-        <a href="tienda.html">inicio</a>
+        <a href="/">Inicio</a>
     </nav>
 
     <main>
 
         <div class="titulo">
-
             <h2>Administración de productos</h2>
+            <button class="nuevo" onclick="nuevoProducto()">+ Nuevo producto</button>
+        </div>
 
-            <button class="nuevo">+ Nuevo producto</button>
+        <div id="formulario-producto" style="display: none">
+
+            <h3 id="titulo-formulario">Nuevo producto</h3>
+
+            <input type="text" id="nombre" placeholder="Nombre del producto">
+
+            <select id="categoria">
+                <option value="">Seleccionar categoría</option>
+            </select>
+
+            <input type="number" id="precio" placeholder="Precio">
+            <input type="number" id="stock" placeholder="Stock">
+
+            <button onclick="guardarProducto()">Guardar</button>
+            <button onclick="cancelarFormulario()">Cancelar</button>
 
         </div>
-            <table class="table">
+
+        <table class="table">
             <thead class="thead">
                 <tr class="tr">
                     <th>ID</th>
@@ -32,66 +48,14 @@
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody class="tbody">
-                <tr class="tr">
-                    <td>1</td>
-                    <td>Gaseosa</td>
-                    <td>Bebidas</td>
-                    <td>$ 2.500</td><br><br>
-                    <td>20</td>
-                    <td>
-                    <button class="editar">Editar</button>
-                    <button class="eliminar">Eliminar</button>
-                    </td>
-                </tr>
-                <tr class="tr">
-                    <td>2</td>
-                    <td>Galletitas</td>
-                    <td>Alimentos</td>
-                    <td>$ 1.800</td>
-                    <td>15</td>
-                    <td>
-                    <button class="editar">Editar</button>
-                    <button class="eliminar">Eliminar</button>
-                    </td>
-                </tr>
-                <tr class="tr">
-                    <td>3</td>
-                    <td>Té</td>
-                    <td>Infusiones</td>
-                    <td>$ 1.200</td>
-                    <td>12</td>
-                    <td>
-                    <button class="editar">Editar</button>
-                    <button class="eliminar">Eliminar</button>
-                    </td>
-                </tr>
-                <tr class="tr">
-                    <td>4</td>
-                    <td>Shampoo</td>
-                    <td>Higiene</td>
-                    <td>$ 2.200</td>
-                    <td>8</td>
-                    <td>
-                    <button class="editar">Editar</button>
-                    <button class="eliminar">Eliminar</button>
-                    </td>
-                </tr>
-                <tr class="tr">
-                    <td>5</td>
-                    <td>Jugo</td>
-                    <td>Bebidas</td>
-                    <td>$ 2.300</td>
-                    <td>12</td>
-                    <td>
-                    <button class="editar">Editar</button>
-                    <button class="eliminar">Eliminar</button>
-                    </td>
-                </tr>
+
+            <tbody class="tbody" id="lista-productos">
             </tbody>
         </table>
 
-
     </main>
+
+    <script src="/admin.js"></script>
+
 </body>
 </html>

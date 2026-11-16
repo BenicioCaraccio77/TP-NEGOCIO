@@ -1,85 +1,132 @@
-.titulo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 35px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-nav {
-    background-color: hsl(216, 91%, 32%);
-    padding: 15px;
-    text-align: center;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fb;
+    color: #263b50;
+}
+
+.nav {
+    background-color: #102e50;
+    padding: 18px 35px;
+}
+
+.nav a {
+    color: white;
     text-decoration: none;
-    font-size: 25px;
-    color: rgb(218, 206, 206);
+    font-size: 15px;
 }
 
-nav ul {
-    display: flex;
-    text-align: center;
-    list-style: none;
-    gap: 35px;
-}
-    
-
-
-
-.titulo h2 {
-    color: #123653;
-    font-size: 28px;
+.nav a:hover {
+    color: #60a5fa;
 }
 
 main {
-    background-color: white;
     margin: 35px;
     padding: 30px;
-    border-radius: 10px;
-    min-height: 600px;
 }
 
 .titulo {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
 .titulo h2 {
     color: #123653;
-    font-size: 28px;
+    font-size: 25px;
 }
-
 
 .nuevo {
-   
-    color: rgba(19, 190, 47, 0.747);
+    background-color: #16a34a;
+    color: white;
     border: none;
-    padding: 15px 22px;
-   
+    padding: 12px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px;
 }
 
+.nuevo:hover {
+    background-color: #15803d;
+}
 
-table {
-    
+.table {
+    width: 100%;
     border-collapse: collapse;
+    background-color: white;
+}
+
+.thead {
+    background-color: white;
+    color: #123653;
+}
+
+.table th,
+.table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tbody {
+    color: #123653;
+    background-color: white;
+}
+
+.tbody tr:hover {
+    background-color: #f4f7fb;
 }
 
 button {
     cursor: pointer;
     border: none;
-    border-radius: 6px;
-    padding: 12px 20px;
+    border-radius: 5px;
+    padding: 10px 15px;
     color: white;
-    margin-right: 10px;
 }
 
-.editar {
-    color: #087bf5;
+.tbody button:first-child {
+    background-color: #0866d8;
 }
 
-.eliminar {
-    color: #ed3939;
+.tbody button:last-child {
+    background-color: #dc2626;
 }
 
+#formulario-producto {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+#formulario-producto h3 {
+    color: #123653;
+    margin-bottom: 15px;
+}
+
+#formulario-producto input,
+#formulario-producto select {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#formulario-producto button:first-of-type {
+    background-color: #0866d8;
+}
+
+#formulario-producto button:last-of-type {
+    background-color: #64748b;
+}

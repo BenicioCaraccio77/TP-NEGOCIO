@@ -1,94 +1,98 @@
-.T-P{
-text-align: center;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
-    font-family: arial, sans-serif;
+body {
+    font-family: Arial, sans-serif;
     background-color: #f4f7fb;
     color: #15365b;
-
 }
-nav{
-    background-color: #102e50;
-    color: whitesmoke;
-    display: flex;
 
+header {
+    background-color: #102e50;
+    color: white;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 35px;
-    text-decoration: none;
+    padding: 18px 35px;
 }
 
+header h1 {
+    font-size: 22px;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+}
 
 nav a {
     color: white;
     text-decoration: none;
-    text-align: center;
-    font-size: 20px;
-    transition: 0.6;
-    
+    font-size: 15px;
 }
-nav a:hover{
+
+nav a:hover {
     color: #60a5fa;
-
 }
 
-.portada{
- 
-height:  500px;
-background-image: linear-gradient(rgba(15, 13, 133, 0.253),
-rgba(0,0,0, 0.60));
-background-size: cover;
-background-position: center;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-text-align: center;
-
-}
-.ben{
-
-    color: rgb(40, 38, 134);
+.portada {
+    height: 430px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("fondo.jpg");
+    background-size: cover;
+    background-position: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin-top: 100px;
-    padding: 30px 50px;
-    text-decoration: none;
+    text-align: center;
+    color: white;
 }
 
-.boton{
+.contenido h2 {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.contenido p {
+    font-size: 17px;
+    margin-bottom: 25px;
+}
+
+.boton {
     display: inline-block;
-    background-color: #0459b4b6;
+    background-color: #0866d8;
     color: white;
     text-decoration: none;
-    padding: 18px 35px;
-    border-radius: 8px;
-    font-size: 20px;
-}
-.boton:hover{
-    background-color: #0030b394;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 15px;
 }
 
-.contenido{
-    font-size: 25px;
-    margin-bottom: 40px;
-}
-.cabecera{
-    display: flex;
-    justify-content: flex-end;
+.boton:hover {
+    background-color: #004ba8;
 }
 
-.espaciador{
+.beneficios {
     display: flex;
-    gap: 20px;
-    
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: white;
+    text-align: center;
+}
+
+.beneficio {
+    padding: 15px;
+}
+
+.beneficio h3 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.beneficio p {
+    font-size: 14px;
+    color: #64748b;
 }

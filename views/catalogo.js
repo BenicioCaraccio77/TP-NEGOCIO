@@ -1,114 +1,134 @@
-let carrito = [];
-let productosDisponibles = [];
+let carrito = []
+let productosDisponibles = []
+let categoriasDisponibles = []
 
-fetch("/catalogo")
-    .then(respuesta => respuesta.json())
-    .then(productos => {
-        productosDisponibles = productos;
-        const lista = document.getElementById("lista-productos");
+Promise.all([
+    fetch("/productos").then(respuesta => respuesta.json()),
+    fetch("/categorias").then(respuesta => respuesta.json())
+])
+.then(([productos, categorias]) => {
 
-        productos.forEach(producto => {
+    productosDisponibles = productos
+    categoriasDisponibles = categorias
 
-            lista.innerHTML += `
-                <article class="producto">
-                    <h3>${producto.nombre}</h3>
-                    <p>Stock disponible: ${producto.stock}</p>
-                    <span class="precio">$${producto.precio}</span>
-                    <button onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
-                </article>
-            `;
+    const lista = document.getElementById("lista-productos")
 
-        });
+    productos.forEach(producto => {
 
-    });
+        const categoria = categorias.find(c => c.id === producto.categoria_id)
 
+        lista.innerHTML += `
+            <article class="producto">
+                <h3>${producto.nombre}</h3>
+                <p class="categoria">Categoría: ${categoria ? categoria.nombre : "Sin categoría"}</p>
+                <p class="stock">Stock disponible: ${producto.stock}</p>
+                <span class="precio">$${producto.precio}</span>
+                <button onclick="mostrarDetalles(${producto.id})">Ver detalles</button>
+                <button onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
+            </article>
+        `
 
-function comprarProducto(id, precio) {
-
-
-    fetch("/ventas", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json"
-         },
-            body: JSON.stringify({
-            total: 0,
-            usuario_id: 2
-        })
     })
-        .then(respuesta => respuesta.json())
-        .then(venta => {
 
-        console.log("Venta creada:", venta);
+})
 
-        const idVenta = venta[0].id;
-        console.log("ID de la venta:", idVenta);
+// Buscador
+let buscador = document.getElementById("buscador")
 
-        fetch("/detalle-ventas", {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        venta_id: idVenta,
-        producto_id: id,
-        cantidad: 1,
-        precio_unitario: precio
-     })
+buscador.addEventListener("input", function() {
+
+    let texto = buscador.value.toLowerCase()
+    let productos = document.querySelectorAll(".producto")
+
+    productos.forEach(producto => {
+
+        if (producto.textContent.toLowerCase().includes(texto)) {
+            producto.style.display = ""
+        } else {
+            producto.style.display = "none"
+        }
+
     })
-    .then(respuesta => respuesta.json())
-    .then(detalle => {
-    console.log("Producto agregado a la venta:", detalle);
 
-    alert("Compra realizada correctamente");
-});
+})
 
-    });
+// Mostrar detalles del producto
+function mostrarDetalles(id) {
 
+    const producto = productosDisponibles.find(p => p.id === id)
+    const categoria = categoriasDisponibles.find(c => c.id === producto.categoria_id)
+
+    const detalles = document.getElementById("contenido-detalles")
+    const modal = document.getElementById("detalle-producto")
+
+    detalles.innerHTML = `
+        <h2>${producto.nombre}</h2>
+        <p>Categoría: ${categoria ? categoria.nombre : "Sin categoría"}</p>
+        <p>Precio: $${producto.precio}</p>
+        <p>Stock disponible: ${producto.stock}</p>
+        <button onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
+    `
+
+    modal.style.display = "flex"
+}
+
+// Cerrar detalles
+function cerrarDetalles() {
+    document.getElementById("detalle-producto").style.display = "none"
 }
 
 function agregarAlCarrito(id) {
 
-    const producto = productosDisponibles.find(p => p.id === id);
+    const producto = productosDisponibles.find(p => p.id === id)
 
-    carrito.push(producto);
+    if (producto.stock <= 0) {
+        alert("No hay stock disponible")
+        return
+    }
 
-    console.log("Carrito:", carrito);
-    mostrarCarrito();
+    carrito.push(producto)
 
-    alert("Producto agregado al carrito");
+    console.log("Carrito:", carrito)
+    mostrarCarrito()
+
+    alert("Producto agregado al carrito")
 }
 
 function mostrarCarrito() {
 
-    const lista = document.getElementById("carrito");
+    const lista = document.getElementById("carrito")
 
-    lista.innerHTML = "";
+    lista.innerHTML = ""
 
     carrito.forEach(producto => {
 
         lista.innerHTML += `
             <p>${producto.nombre} - $${producto.precio}</p>
-        `;
+        `
 
-    });
+    })
 
-    let total = 0;
+    let total = 0
 
     carrito.forEach(producto => {
-        total += producto.precio;
-    });
+        total += Number(producto.precio)
+    })
 
-    document.getElementById("total-carrito").innerText = "Total: $" + total;
+    document.getElementById("total-carrito").innerText = "Total: $" + total
 }
+
 function confirmarCompra() {
 
     if (carrito.length === 0) {
-        alert("El carrito está vacío");
-        return;
+        alert("El carrito está vacío")
+        return
     }
 
-    const total = carrito.reduce((suma, producto) => suma + producto.precio, 0);
+    let total = 0
+
+    carrito.forEach(producto => {
+        total += Number(producto.precio)
+    })
 
     fetch("/ventas", {
         method: "POST",
@@ -123,7 +143,7 @@ function confirmarCompra() {
     .then(respuesta => respuesta.json())
     .then(venta => {
 
-        const idVenta = venta[0].id;
+        const idVenta = venta[0].id
 
         Promise.all(
             carrito.map(producto => {
@@ -139,18 +159,16 @@ function confirmarCompra() {
                         cantidad: 1,
                         precio_unitario: producto.precio
                     })
-                }).then(respuesta => respuesta.json());
+                }).then(respuesta => respuesta.json())
 
             })
         ).then(() => {
 
-            alert("¡Compra realizada correctamente!");
+            alert("¡Compra realizada correctamente!")
 
-            carrito = [];
-            mostrarCarrito();
+            carrito = []
+            mostrarCarrito()
 
-        });
-
-    });
-
+        })
+    })
 }
