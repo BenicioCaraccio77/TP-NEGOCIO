@@ -16,9 +16,12 @@ Promise.all([
     productos.forEach(producto => {
 
         const categoria = categorias.find(c => c.id === producto.categoria_id)
+        const nombreImagen = producto.nombre.toLowerCase().replaceAll(" ", "-")
+        const imagen = `/imagenes/${nombreImagen}.jpg`
 
         lista.innerHTML += `
             <article class="producto">
+                <img src="${imagen}" alt="${producto.nombre}">
                 <h3>${producto.nombre}</h3>
                 <p class="categoria">Categoría: ${categoria ? categoria.nombre : "Sin categoría"}</p>
                 <p class="stock">Stock disponible: ${producto.stock}</p>

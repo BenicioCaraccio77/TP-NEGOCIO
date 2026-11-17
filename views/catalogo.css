@@ -163,3 +163,11 @@ main > button {
     font-size: 25px;
     cursor: pointer;
 }
+
+.producto img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
